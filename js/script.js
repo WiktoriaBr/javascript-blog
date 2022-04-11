@@ -25,16 +25,15 @@ const titleClickHandler = function (event) {
   /* [DONE] get 'href' attribute from the clicked link */
   const linkAttri = clickedElement.getAttribute("href");
   
-  /* find the correct article using the selector (value of 'href' attribute) */
-  const allArticles = document.querySelectorAll(".posts article");
+  /* [DONE] find the correct article using the selector (value of 'href' attribute) */
+  const allArticles = document.querySelectorAll(".posts article.post");
 
   for (let searchedArticle of allArticles) {
     const articleAttri = searchedArticle.getAttribute("id");
-    if(worInProgress)
+    if(articleAttri == linkAttri.slice(1))
     {
-      searchedArticle.classList.sdd("active");
+      searchedArticle.classList.add("active");
     }
-    
   }
   /* add class 'active' to the correct article */
 };
