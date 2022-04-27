@@ -37,14 +37,17 @@ const optArticleSelector = ".post",
   optTitleListSelector = ".titles",
   optArticleTagsSelector = ".post-tags .list";
 
-function generateTitleLinks() {
+function generateTitleLinks(customSelector = "") {
   //console.log("Funkcja generateTitleLinks wywolana");
 
   /* remove contents of titleList */
   const titleList = document.querySelector(optTitleListSelector);
   titleList.innerHTML = "";
   /* for each article */
-  const articles = document.querySelectorAll(optArticleSelector);
+  const articles = document.querySelectorAll(
+    optArticleSelector + customSelector
+  );
+  console.log("2 "+customSelector);
   let html = "";
 
   for (let article of articles) {
@@ -133,8 +136,13 @@ function tagClickHandler(event) {
 
 function addClickListenersToTags() {
   /* find all links to tags */
+  const linksAllTags = document.querySelectorAll('.list');
   /* START LOOP: for each link */
-  /* add tagClickHandler as event listener for that link */
+  for (let link of linksAllTags)
+  {
+    /* add tagClickHandler as event listener for that link */
+    link.addEventListener("click", tagClickHandler);
+  }
   /* END LOOP: for each link */
 }
 
