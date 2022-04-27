@@ -3,7 +3,7 @@
 function titleClickHandler(event) {
   event.preventDefault();
   const clickedElement = this;
-  //console.log("clickedElement (with plus): " + clickedElement);
+  console.log("clickedElement in the first function " + clickedElement);
 
   /* [DONE] remove class 'active' from all article links  */
   const activeLinks = document.querySelectorAll(".titles a.active");
@@ -47,7 +47,7 @@ function generateTitleLinks(customSelector = "") {
   const articles = document.querySelectorAll(
     optArticleSelector + customSelector
   );
-  console.log("2 "+customSelector);
+  console.log("generateTitleLinks i customSelector="+customSelector);
   let html = "";
 
   for (let article of articles) {
@@ -116,8 +116,10 @@ function tagClickHandler(event) {
   console.log("log for const href " + href);
   /* make a new constant "tag" and extract tag from the "href" constant */
   const tag = href.replace("#tag-", "");
+  console.log("log for const tag " + tag);
   /* find all tag links with class active */
   const tagActiceLinks = document.querySelectorAll('a.active[href^="#tag-"]');
+  console.log("log for const tagActiceLinks " + tagActiceLinks);
   /* START LOOP: for each active tag link */
   for (let tagActiveLink of tagActiceLinks) {
     /* remove class active */
@@ -137,11 +139,15 @@ function tagClickHandler(event) {
 function addClickListenersToTags() {
   /* find all links to tags */
   const linksAllTags = document.querySelectorAll('.list');
+  console.log("log for const linksAllTags in addClickListenersToTags " + linksAllTags);
+
   /* START LOOP: for each link */
   for (let link of linksAllTags)
   {
     /* add tagClickHandler as event listener for that link */
     link.addEventListener("click", tagClickHandler);
+    console.log("log for const link in addClickListenersToTags " + link);
+
   }
   /* END LOOP: for each link */
 }
