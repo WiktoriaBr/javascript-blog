@@ -126,10 +126,10 @@ function tagClickHandler(event) {
   const tag = hrefTagAttr.replace("#tag-", "");
   console.log("log for const tag " + tag);
   /* find all tag links with class active */
-  const tagActiceLinks = document.querySelectorAll('a.active[href^="#tag-"]');
-  //console.log("log for const tagActiceLinks " + tagActiceLinks);
+  const tagArticleLinks = document.querySelectorAll('a.active[href^="#tag-"]');
+  //console.log("log for const tagArticleLinks " + tagArticleLinks);
   /* START LOOP: for each active tag link */
-  for (let tagActiveLink of tagActiceLinks) {
+  for (let tagActiveLink of tagArticleLinks) {
     /* remove class active */
     tagActiveLink.classList.remove("active");
   } /* END LOOP: for each active tag link */
@@ -171,14 +171,14 @@ function generateAuthors ()
     let linkHtmlAuthor ="";
     const authorAttr = authorWrapper.getAttribute("data-author");
     //console.log(authorAttr+html);
-    linkHtmlAuthor='<a href="#author' + authorAttr + '">by ' + authorAttr + '</a>';
+    linkHtmlAuthor='<a href="#author-' + authorAttr + '">by ' + authorAttr + '</a>';
     authorWrapper.innerHTML=linkHtmlAuthor;
   }
 }
 
 function addClickListenersToAuthors()
 {
-
+  
 }
 
   generateTitleLinks();
