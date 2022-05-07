@@ -169,7 +169,7 @@ function generateAuthors ()
     //console.log(authorWrapper);
     authorWrapper.innerHTML ="";
     let linkHtmlAuthor ="";
-    const authorAttr = authorWrapper.getAttribute("data-author");
+    const authorAttr = article.getAttribute("data-author");
     //console.log(authorAttr+html);
     linkHtmlAuthor='<a href="#author-' + authorAttr + '">by ' + authorAttr + '</a>';
     authorWrapper.innerHTML=linkHtmlAuthor;
@@ -200,7 +200,7 @@ function authorClickHandler(event)
   {
     console.log(authorLink);
   }*/
-  generateTitleLinks('[data-author~="' + authorJustName + '"]');
+  generateTitleLinks('[data-author="' + authorJustName + '"]');
   
 }
 
