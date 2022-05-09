@@ -91,6 +91,13 @@ body {
     padding: 3px;
   }
 }
+.tags 
+{
+  li{
+  display: inline-block;
+  padding: 2px;
+  }
+}
 
 /* Authors */
 
@@ -98,6 +105,43 @@ body {
   li {
     margin-bottom: 12px;
   }
+}
+
+/*Tags*/
+.tag-size-5
+{
+  font-size: 140%;
+  color: #264653;
+  text-decoration: none;
+  font-weight: bold;
+}
+.tag-size-4
+{
+  font-size: 120%;
+  color: #2A9D8F;
+  font-weight: bold;
+  text-decoration: none;
+}
+.tag-size-3
+{
+  font-size: 100%;
+  color: #E9C46A;
+  font-weight: bold;
+  text-decoration: none;
+}
+.tag-size-2
+{
+  font-size: 80%;
+  color: #F4A261;
+  font-weight: bold;
+  text-decoration: none;
+}
+.tag-size-1
+{
+  font-size: 80%;
+  color: #E76F51;
+  font-weight: bold;
+  text-decoration: none;
 }
 
 /* Post */

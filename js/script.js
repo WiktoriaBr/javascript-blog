@@ -37,7 +37,9 @@ const optArticleSelector = ".post",
   optTitleListSelector = ".titles",
   optArticleTagsSelector = ".post-tags .list",
   optTagsListSelector = ".sidebar .tags",
-  optArticleAuthorSelector = ".post .post-author";
+  optArticleAuthorSelector = ".post .post-author",
+  optCloudClassCount = 5,
+  optCloudClassPrefix = "tag-size-";
 
 function generateTitleLinks(customSelector = "") {
   //console.log("Funkcja generateTitleLinks wywolana");
@@ -83,13 +85,23 @@ function generateTitleLinks(customSelector = "") {
 }
 
 function calculateTagsParams(tags) {
-  const params = {max:0, min:999999};
-  for(let tag in tags){
-    console.log(tag + ' is used ' + tags[tag] + ' times');
+  const params = { max: 0, min: 999999 };
+  for (let tag in tags) {
+    //console.log(tag + ' is used ' + tags[tag] + ' times');
     params.max = Math.max(tags[tag], params.max);
     params.min = Math.min(tags[tag], params.min);
+    //console.log(tags[tag]);
   }
   return params;
+}
+
+function claculateTagClass (count, params)
+{
+  const normalizedCount = count - params.min;
+  const normalizedMax = params.max - params.min;
+  const percentage = normalizedCount / normalizedMax;
+  const classNumber = Math.floor( percentage * (optCloudClassCount - 1) + 1 );
+  return optCloudClassPrefix+classNumber;
 }
 
 function generateTags() {
@@ -130,23 +142,19 @@ function generateTags() {
   let tagList = document.querySelector(optTagsListSelector);
   /*calculating the parameters of the tags - amount of tags*/
   const tagsParams = calculateTagsParams(allTags);
-  console.log("tagsParams:", tagsParams);
+  //console.log("tagsParams:", tagsParams);
   /* [NEW] create variable for all links HTML code */
   let allTagsHTML = " ";
 
   /* [NEW] START LOOP: for each tag in allTags: */
   for (let tag in allTags) {
     /* [NEW] generate code of a link and add it to allTagsHTML */
+    const tagLinkHTML = claculateTagClass(allTags[tag], tagsParams);
+    //console.log('tagLinkHTML:', tagLinkHTML);
     allTagsHTML +=
-      '<li><a href="#tag-' +
-      tag +
-      '">' +
-      tag +
-      " (" +
-      allTags[tag] +
-      ")</a></li>";
+      '<li><a class="'+tagLinkHTML+'" href="#tag-' + tag +'">' +tag +"</a></li>";
   }
-  //console.log(allTagsHTML);
+  console.log(allTagsHTML);
 
   /* [NEW] END LOOP: for each tag in allTags: */
 
