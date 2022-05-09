@@ -38,6 +38,7 @@ const optArticleSelector = ".post",
   optArticleTagsSelector = ".post-tags .list",
   optTagsListSelector = ".sidebar .tags",
   optArticleAuthorSelector = ".post .post-author",
+  optAuthorsListSelector = ".sidebar .authors",
   optCloudClassCount = 5,
   optCloudClassPrefix = "tag-size-";
 
@@ -95,7 +96,7 @@ function calculateTagsParams(tags) {
   return params;
 }
 
-function claculateTagClass (count, params)
+function calculateTagClass (count, params)
 {
   const normalizedCount = count - params.min;
   const normalizedMax = params.max - params.min;
@@ -149,12 +150,12 @@ function generateTags() {
   /* [NEW] START LOOP: for each tag in allTags: */
   for (let tag in allTags) {
     /* [NEW] generate code of a link and add it to allTagsHTML */
-    const tagLinkHTML = claculateTagClass(allTags[tag], tagsParams);
+    const tagLinkHTML = calculateTagClass(allTags[tag], tagsParams);
     //console.log('tagLinkHTML:', tagLinkHTML);
     allTagsHTML +=
       '<li><a class="'+tagLinkHTML+'" href="#tag-' + tag +'">' +tag +"</a></li>";
   }
-  console.log(allTagsHTML);
+  //console.log(allTagsHTML);
 
   /* [NEW] END LOOP: for each tag in allTags: */
 
@@ -210,18 +211,36 @@ function addClickListenersToTags() {
 }
 
 function generateAuthors() {
+  let allAuthors = {};
+  let linkHtmlAuthor = "";
+  let sidebarAuthorHtmlList = document.querySelector(optAuthorsListSelector);
+  let sidebarAuthorHtml = "";
   const articles = document.querySelectorAll(optArticleSelector);
   for (let article of articles) {
     const authorWrapper = article.querySelector(optArticleAuthorSelector);
     //console.log(authorWrapper);
     authorWrapper.innerHTML = "";
-    let linkHtmlAuthor = "";
     const authorAttr = article.getAttribute("data-author");
-    //console.log(authorAttr+html);
+    //console.log("Author for article "+article+ " is "+ authorAttr);
     linkHtmlAuthor =
       '<a href="#author-' + authorAttr + '">by ' + authorAttr + "</a>";
     authorWrapper.innerHTML = linkHtmlAuthor;
+    if (!allAuthors[authorAttr])
+    {
+      allAuthors[authorAttr]=1;
+      sidebarAuthorHtml += '<li>'+linkHtmlAuthor+'</li>';
+      //console.log(allAuthors[authorAttr]);
+    }
+    else
+    {
+      allAuthors[authorAttr]++;
+      //console.log(authorAttr+"++");
+    }
   }
+  console.log(sidebarAuthorHtml);
+
+  console.log(allAuthors);
+  sidebarAuthorHtmlList.innerHTML = sidebarAuthorHtml;
 }
 
 function addClickListenersToAuthors() {
