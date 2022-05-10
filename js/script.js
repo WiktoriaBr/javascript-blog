@@ -228,7 +228,7 @@ function generateAuthors() {
     if (!allAuthors[authorAttr])
     {
       allAuthors[authorAttr]=1;
-      sidebarAuthorHtml += '<li>'+linkHtmlAuthor+'</li>';
+      //sidebarAuthorHtml += '<li>'+linkHtmlAuthor+'</li>';
       //console.log(allAuthors[authorAttr]);
     }
     else
@@ -237,6 +237,11 @@ function generateAuthors() {
       //console.log(authorAttr+"++");
     }
   }
+  for (let author in allAuthors)
+  {
+    sidebarAuthorHtml += '<li><a href="#author-' + author + '"> ' + author+ ' (' +allAuthors[author] +') '+'</a></li>';
+  }
+  console.log(allAuthors);
   console.log(sidebarAuthorHtml);
 
   console.log(allAuthors);
@@ -244,7 +249,7 @@ function generateAuthors() {
 }
 
 function addClickListenersToAuthors() {
-  const linksAllAuthors = document.querySelectorAll(".posts .post-author a");
+  const linksAllAuthors = document.querySelectorAll(".posts .post-author a, .sidebar .authors a");
   for (let link of linksAllAuthors) {
     link.addEventListener("click", authorClickHandler);
   }
