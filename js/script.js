@@ -1,5 +1,12 @@
 ("use strict");
 
+const templates = 
+{
+  articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML),
+  tagBottomLink: Handlebars.compile(document.querySelector('#template-tagBottom-link').innerHTML),
+  authorLink: Handlebars.compile(document.querySelector('#template-author-link').innerHTML)
+}
+
 function titleClickHandler(event) {
   event.preventDefault();
   const clickedElement = this;
@@ -53,7 +60,7 @@ function generateTitleLinks(customSelector = "") {
     optArticleSelector + customSelector
   );
   //console.log("generateTitleLinks i customSelector="+customSelector);
-  let html = "";
+  //let html = "";
 
   for (let article of articles) {
     /* get the article id */
@@ -65,18 +72,14 @@ function generateTitleLinks(customSelector = "") {
     /* get the title from the title element */
 
     /* create HTML of the link */
-    const linkHTML =
-      '<li><a href="#' +
-      articleId +
-      '"><span>' +
-      articleTitle +
-      "</span></a></li>";
-    html = html + linkHTML;
+    const linkHTMLData = {id: articleId, title: articleTitle};
+    const linkHTML = templates.articleLink(linkHTMLData);
+    //console.log(linkHTML);
 
     /* insert link into titleList */
-    //titleList.insertAdjacentHTML('beforeend', linkHTML);
+    titleList.insertAdjacentHTML('beforeend', linkHTML);
   }
-  titleList.innerHTML = html;
+  //titleList.innerHTML = html;
 
   const links = document.querySelectorAll(".titles a");
 
@@ -125,7 +128,9 @@ function generateTags() {
     /* START LOOP: for each tag */
     for (let tag of articleTagsArray) {
       /* generate HTML of the link */
-      const linkHTML = '<li><a href="#tag-' + tag + '">' + tag + "</a></li>";
+      //const linkHTML = '<li><a href="#tag-' + tag + '">' + tag + "</a></li>";
+      const linkHTMLData ={id: tag, title: tag};
+      const linkHTML = templates.tagBottomLink(linkHTMLData);
       /* add generated code to html variable */
       html = html + linkHTML;
       /* [NEW] check if this link is NOT already in allTags */
@@ -212,19 +217,20 @@ function addClickListenersToTags() {
 
 function generateAuthors() {
   let allAuthors = {};
-  let linkHtmlAuthor = "";
   let sidebarAuthorHtmlList = document.querySelector(optAuthorsListSelector);
   let sidebarAuthorHtml = "";
   const articles = document.querySelectorAll(optArticleSelector);
   for (let article of articles) {
     const authorWrapper = article.querySelector(optArticleAuthorSelector);
-    //console.log(authorWrapper);
     authorWrapper.innerHTML = "";
     const authorAttr = article.getAttribute("data-author");
     //console.log("Author for article "+article+ " is "+ authorAttr);
-    linkHtmlAuthor =
-      '<a href="#author-' + authorAttr + '">by ' + authorAttr + "</a>";
-    authorWrapper.innerHTML = linkHtmlAuthor;
+    /*linkHtmlAuthor =
+      '<a href="#author-' + authorAttr + '">by ' + authorAttr + "</a>";*/
+    const linkHTMLData = {id: authorAttr, title: authorAttr };
+    const linkHTML = templates.authorLink(linkHTMLData);
+    console.log(linkHTML);
+    authorWrapper.innerHTML = linkHTML;
     if (!allAuthors[authorAttr])
     {
       allAuthors[authorAttr]=1;
@@ -241,10 +247,10 @@ function generateAuthors() {
   {
     sidebarAuthorHtml += '<li><a href="#author-' + author + '"> ' + author+ ' (' +allAuthors[author] +') '+'</a></li>';
   }
-  console.log(allAuthors);
-  console.log(sidebarAuthorHtml);
+  //console.log(allAuthors);
+  //console.log(sidebarAuthorHtml);
 
-  console.log(allAuthors);
+  //console.log(allAuthors);
   sidebarAuthorHtmlList.innerHTML = sidebarAuthorHtml;
 }
 
